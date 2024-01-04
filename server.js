@@ -5,6 +5,8 @@ const app = express();
 
 connectDB();
 
+app.use(express.json());
+
 app.get('/', (req, res) => {
   return res.json({
     msg: 'Welcome to the ContactKeeper API...',
