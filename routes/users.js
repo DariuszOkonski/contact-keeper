@@ -41,9 +41,23 @@ router.post(
 
       await user.save();
 
-      
+      const payload = {
+        user: {
+          id: user.id,
+        },
+      };
 
-      return res.send(user);
+      jwt.sign(
+        payload,
+        config.get('jwtSecret'),
+        {
+          expiresIn: 3600,
+        },
+        (err, token) => {
+          if (err) throw err;
+          res.json({ token });
+        }
+      );
     } catch (err) {
       console.error(err.message);
       return res.status(500).send('Server Error');
